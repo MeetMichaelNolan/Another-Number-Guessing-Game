@@ -1,0 +1,98 @@
+import random
+
+
+def intro():
+    print("Welcome to Michael's Number Guessing Game!")
+    print("The goal of this game is to guess the random number, "
+          "the range will be set based on your choice of difficulty.")
+
+
+def difficulty():
+    while True:
+        answer = input("Enter 1 for Easy, Enter 2 for Intermediate, Enter 3 for Hard, Enter 4 for Impossible: ")
+
+        try:
+            answer = int(answer)
+        except:
+            print("Error, invalid input. Try again.")
+            continue
+
+        if answer < 1:
+            print("Error, invalid input. Try again.")
+        elif answer > 4:
+            print("Error, invalid input. Try again.")
+        elif answer == 1 or answer == 2 or answer == 3 or answer == 4:
+            return answer
+        else:
+            print("Error, invalid input. Try again.")
+
+
+def game(MIN, MAX):
+    num = random.randint(MIN, MAX)
+    guesses = 0
+
+    print(f"Your random number will be selected between {MIN} and {MAX}.")
+    print("You will have 10 guesses to find the correct number.")
+    print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+
+    while guesses != 10:
+        guess = input(f"Guess {guesses + 1}: ")
+
+        try:
+            guess = int(guess)
+        except:
+            print("Error, invalid entry. Please enter a integer value.")
+            continue
+
+        if guess > MAX:
+            print("Error, entry out of range. Please enter a value between 1 and 100.")
+            continue
+
+        elif guess < MIN:
+            print("Error, entry out of range. Please enter a value between 1 and 100.")
+            continue
+
+        if guess < num:
+            print("Higher")
+            guesses += 1
+        elif guess > num:
+            print("Lower")
+            guesses += 1
+        else:
+            print("Correct!")
+            guesses += 1
+            print(f"You guessed our number in {guesses} guesses.")
+            return
+
+    print(f"You have hit your maximum amount of guesses.")
+    print(f"The correct number was {num}.")
+
+
+def main():
+    intro()
+
+    while True:
+        level = difficulty()
+
+        if level == 1:
+            game(1, 100)
+        elif level == 2:
+            game(1, 500)
+        elif level == 3:
+            game(1, 1000)
+        elif level == 4:
+            game(1, 5000)
+
+        while True:
+            answer = input("Do you wish to play again? [y/n]: ").lower()
+
+            if answer == 'y':
+                break
+            elif answer == 'n':
+                print('Goodbye!')
+                quit()
+            else:
+                print("Invalid entry.")
+
+
+main()
